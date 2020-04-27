@@ -1,9 +1,4 @@
 tensorflow==2.0.1
-numpy
-opencv-python
+numpy==1.16.4
 h5py
-imageio
-matplotlib
-Pillow
-streamlit
-flask
+flask==1.1.2
