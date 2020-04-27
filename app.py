@@ -28,7 +28,7 @@ def file_upload():
             img_path = os.path.join(app.config["UPLOAD_FOLDER"], image.filename)
             image.save(img_path)
             pred_class, prob = model.predict(img_path)
-            resp = jsonify({'class': pred_class, 'probability': f"{round(prob, 4)}%"})
+            resp = jsonify({'class': pred_class, 'probability': f"{round(prob, 2)}%"})
         else:
             resp = make_response(jsonify(
                 {'error': 'Attached media not an image of the form jpg, png or jpeg'}), 400)
