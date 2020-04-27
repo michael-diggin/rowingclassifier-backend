@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify, make_response
 from werkzeug.utils import secure_filename
 import tempfile
 
-from rowing_api.rowing_model import RowingModel
+from rowing_model import RowingModel
 
 
 UPLOAD_FOLDER = tempfile.mkdtemp()
