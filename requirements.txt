@@ -1,0 +1,9 @@
+tensorflow==2.0.1
+numpy
+opencv-python
+h5py
+imageio
+matplotlib
+Pillow
+streamlit
+flask
