@@ -1,9 +1,9 @@
 import pytest
 from starlette.testclient import TestClient
 
-from ..main import app
-from ..ml.rowing_model import get_model
-from .mocks import MockModel
+from api.main import app
+from api.ml.rowing_model import get_model
+from api.tests.mocks import MockModel
 
 
 def get_model_override():

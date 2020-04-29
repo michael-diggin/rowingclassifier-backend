@@ -2,7 +2,7 @@ from fastapi import FastAPI, File, UploadFile, HTTPException, Depends
 from starlette.status import HTTP_422_UNPROCESSABLE_ENTITY
 from pydantic import BaseModel
 
-from .ml.rowing_model import get_model, RowingModel
+from api.ml.rowing_model import get_model, RowingModel
 
 
 
@@ -12,6 +12,9 @@ def check_image(name):
         raise HTTPException(status_code=HTTP_422_UNPROCESSABLE_ENTITY, detail="Image attached is not allowed")
     return name
 
+# Image(BaseModel)
+# has an UploadedFile element
+# performs validation
 
 class PredictionResponse(BaseModel):
     predicted_class: str
