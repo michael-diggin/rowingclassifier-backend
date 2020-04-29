@@ -1,14 +1,17 @@
+import os
 import tensorflow as tf
 import numpy as np
+from pathlib import Path
 
 
 class RowingModel():
-    def __init__(self):
+    def __init__(self, model_path):
+        self.model_path = model_path
         self.model = self.load_model()
 
     def load_model(self):
         model_path = 'saved_models/model_with_preprocess.h5'
-        model = tf.keras.models.load_model(model_path)
+        model = tf.keras.models.load_model(self.model_path)
         return model
 
     def _preprocess_img(self, img):
@@ -29,3 +32,9 @@ class RowingModel():
         model_pred = self.model.predict(img_tensor)
         pred_class, prob = self._map_pred_to_class(model_pred)
         return pred_class, prob*100
+
+model_path = os.path.join(Path(__file__).parent, 'saved_models/model_with_preprocess.h5')
+rowing_model = RowingModel(model_path)
+
+def get_model():
+    return rowing_model
