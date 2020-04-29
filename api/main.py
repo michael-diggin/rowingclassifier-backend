@@ -1,6 +1,6 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException, Depends
 from starlette.status import HTTP_422_UNPROCESSABLE_ENTITY
-from pydantic import BaseModel, validator
+from pydantic import BaseModel
 
 from .ml.rowing_model import get_model, RowingModel
 
