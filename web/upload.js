@@ -16,11 +16,7 @@ $(function() {
               $('#msg').html('');
               $.each(response, function (key, data) {
                   $('#msg').append(`${key} : ${data}<br/>`);
-              })
-              img_path = response.path;
-              console.log(img_path);
-              $('#img-name').attr('src', img_path);
-              
+              })              
           },
           error: function(response) {
               $('#msg').html(response.message);

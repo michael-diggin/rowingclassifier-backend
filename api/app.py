@@ -7,7 +7,7 @@ import tempfile
 from api.rowing_model import RowingModel
 
 
-UPLOAD_FOLDER = '..\web\images'
+UPLOAD_FOLDER = tempfile.mkdtemp()
 ALLOWED_EXTENSIONS = ['jpg', 'png', 'jpeg']
 
 application = Flask(__name__)
@@ -30,7 +30,7 @@ def file_upload():
             img_path = os.path.join(application.config["UPLOAD_FOLDER"], image.filename)
             image.save(img_path)
             pred_class, prob = model.predict(img_path)
-            resp = jsonify({'class': pred_class, 'probability': f"{round(prob, 2)}%", 'path': img_path})
+            resp = jsonify({'class': pred_class, 'probability': f"{round(prob, 2)}%",})
         else:
             resp = make_response(jsonify(
                 {'error': 'Attached media not an image of the form jpg, png or jpeg'}), 400)
