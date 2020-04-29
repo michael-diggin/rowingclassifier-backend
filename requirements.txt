@@ -3,3 +3,4 @@ numpy==1.16.4
 h5py
 flask==1.1.2
 Pillow==7.0.0
+flask_cors==3.0.8
