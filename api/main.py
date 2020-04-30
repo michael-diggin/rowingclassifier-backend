@@ -1,35 +1,40 @@
-from fastapi import FastAPI, File, UploadFile, HTTPException, Depends
-from starlette.status import HTTP_422_UNPROCESSABLE_ENTITY
-from pydantic import BaseModel
+from fastapi import FastAPI, File, Depends
+from starlette.middleware.cors import CORSMiddleware
 
 from api.ml.rowing_model import get_model, RowingModel
+from api.datastructures import InputImage, PredictionResponse, BaseResponse
 
 
 
-def check_image(name):
-    ALLOWED_EXTENSIONS = ['jpg', 'png', 'jpeg']
-    if ('.' not in name) or (name=='') or (name.rsplit('.', 1)[1].lower() not in ALLOWED_EXTENSIONS):
-        raise HTTPException(status_code=HTTP_422_UNPROCESSABLE_ENTITY, detail="Image attached is not allowed")
-    return name
+app = FastAPI(
+    title = "Rowing Classifier", 
+    description = "A RESTful API that can predict the type of rowing boat in a given image. \n \
+        Built on top of FastAPI, and uses a Tensorflow model",
+    version = "0.1.0",
+    docs_url = "/api/docs",
+    redoc_url = "/api/redoc" 
+)
 
-# Image(BaseModel)
-# has an UploadedFile element
-# performs validation
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
-class PredictionResponse(BaseModel):
-    predicted_class: str
-    predicted_prob: float
-
-
-app = FastAPI()
-
-@app.get("/")
+@app.get("/api/v1", response_model=BaseResponse)
 def return_usage():
-    return {"Usage": "Attach image in post request to endpoint /v1/predict,\
-        allowed filetypes are .jpg, .jpeg, .png"}
+    """
+    Return the API usage and allowed image types
+    """
+    return BaseResponse()
 
-@app.post("/v1/predict", response_model=PredictionResponse)
-def predict(image: UploadFile = File(...), model: RowingModel = Depends(get_model)):
-    check_image(image.filename)
+@app.post("/api/v1/predict", response_model=PredictionResponse, summary="Generate prediction", response_description="Predicted class type and probability")
+def predict(image: InputImage = File(...), model: RowingModel = Depends(get_model)):
+    """
+    Predict the type of rowing boat in an image:
+
+    - **image**: must be supplied in .jpg, .jpeg or .png format 
+    """
     pred_class, pred_prob = model.predict(image.file)
-    return PredictionResponse(predicted_class=pred_class, predicted_prob=pred_prob)
+    return PredictionResponse(ImageName=image.filename, PredictedClass=pred_class, PredictedProb=pred_prob)

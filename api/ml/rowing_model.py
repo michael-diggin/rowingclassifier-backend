@@ -1,8 +1,8 @@
+from enum import Enum
 import os
 import tensorflow as tf
 import numpy as np
 from pathlib import Path
-
 
 class RowingModel():
     def __init__(self, model_path):
