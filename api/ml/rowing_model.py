@@ -1,4 +1,5 @@
 from enum import Enum
+from functools import lru_cache
 import os
 import tensorflow as tf
 import numpy as np
@@ -34,7 +35,7 @@ class RowingModel():
         return pred_class, prob*100
 
 model_path = os.path.join(Path(__file__).parent, 'saved_models/model_with_preprocess.h5')
-rowing_model = RowingModel(model_path)
 
+@lru_cache()
 def get_model():
-    return rowing_model
+    return RowingModel(model_path)

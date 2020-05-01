@@ -1,8 +1,6 @@
+[![Build Status](https://travis-ci.org/michael-diggin/rowing_api.svg?branch=master)](https://travis-ci.org/michael-diggin/rowing_api)
+
 # RowingApi
-An Api/Web framework for predicting the type of rowing boat in a given image
+An Api for predicting the type of rowing boat in a given image
 
-## Roadmap:
-
-- start with simple api 
-- create web framework 
-- deploy to aws/cloud
+Build on top of FastAPI, with a Tensorflow model

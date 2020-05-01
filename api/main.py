@@ -22,6 +22,12 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
+@app.on_event('startup')
+def startup_event():
+    # run the get model function on startup 
+    # to cache the result, only loaded from disk once
+    get_model()
+
 @app.get("/api/v1", response_model=BaseResponse)
 def return_usage():
     """
