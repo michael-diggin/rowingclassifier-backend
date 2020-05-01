@@ -1,9 +1,9 @@
-from enum import Enum
 from functools import lru_cache
 import os
 import tensorflow as tf
 import numpy as np
 from pathlib import Path
+
 
 class RowingModel():
     def __init__(self, model_path):
@@ -11,7 +11,6 @@ class RowingModel():
         self.model = self.load_model()
 
     def load_model(self):
-        model_path = 'saved_models/model_with_preprocess.h5'
         model = tf.keras.models.load_model(self.model_path)
         return model
 

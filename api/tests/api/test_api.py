@@ -1,7 +1,11 @@
 import pytest
 import numpy as np
+from mock import patch, Mock
 from starlette.testclient import TestClient
 from starlette.status import HTTP_200_OK, HTTP_422_UNPROCESSABLE_ENTITY, HTTP_400_BAD_REQUEST
+
+from api.main import app
+from api.ml import rowing_model
 
 
 def test_predict(test_client: TestClient):
@@ -27,3 +31,9 @@ def test_with_no_input(test_client: TestClient):
     files = {'image': None}
     resp = test_client.post("/api/v1/predict", files=files)
     assert resp.status_code == HTTP_400_BAD_REQUEST
+
+
+@patch.object(rowing_model.RowingModel, 'load_model')
+def test_app_startup_loads_model(mock_load: Mock):
+    with TestClient(app) as test_client:
+        assert mock_load.call_count == 1
