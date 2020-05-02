@@ -6,8 +6,8 @@ from functools import lru_cache
 
 
 class APISettings(BaseSettings):
-    API_KEY: str
-    API_KEY_NAME: str
+    API_KEY: str = None
+    API_KEY_NAME: str = None
 
     class Config:
         env_file = ".env"
