@@ -12,7 +12,8 @@ def test_predict(test_client: TestClient):
     np.random.seed(0)
     test_image = 'default_eight_image.jpg'
     files = {'image': open(test_image, 'rb')}
-    resp = test_client.post("/api/v1/predict", files=files)
+    headers = {'access_token': 'test_token'}
+    resp = test_client.post("/api/v1/predict", files=files, headers=headers)
     assert resp.status_code == HTTP_200_OK
     assert resp.json()['PredictedClass'] == 'Eights'
     assert round(resp.json()['PredictedProb'], 4) == 0.5928
@@ -24,12 +25,14 @@ def test_predict_with_wrong_input(test_client: TestClient, tmp_path):
     p = d / "not_an_image.txt"
     p.write_text('Not an Image')
     files = {'image': open(d / 'not_an_image.txt', 'rb')}
-    resp = test_client.post("/api/v1/predict", files=files)
+    headers = {'access_token': 'test_token'}
+    resp = test_client.post("/api/v1/predict", files=files, headers=headers)
     assert resp.status_code == HTTP_422_UNPROCESSABLE_ENTITY
 
 def test_with_no_input(test_client: TestClient):
     files = {'image': None}
-    resp = test_client.post("/api/v1/predict", files=files)
+    headers = {'access_token': 'test_token'}
+    resp = test_client.post("/api/v1/predict", files=files, headers=headers)
     assert resp.status_code == HTTP_400_BAD_REQUEST
 
 

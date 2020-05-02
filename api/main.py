@@ -1,8 +1,12 @@
 from fastapi import FastAPI, File, Depends
+from fastapi.security.api_key import APIKey
 from starlette.middleware.cors import CORSMiddleware
+
 
 from api.ml.rowing_model import get_model, RowingModel
 from api.datastructures import InputImage, PredictionResponse, BaseResponse
+from api.security import set_settings, check_api_key
+
 
 
 
@@ -27,16 +31,18 @@ def startup_event():
     # run the get model function on startup 
     # to cache the result, only loaded from disk once
     get_model()
+    set_settings()
 
 @app.get("/api/v1", response_model=BaseResponse)
-def return_usage():
+def return_usage(api_key: APIKey = Depends(check_api_key)):
     """
     Return the API usage and allowed image types
     """
     return BaseResponse()
 
 @app.post("/api/v1/predict", response_model=PredictionResponse, summary="Generate prediction", response_description="Predicted class type and probability")
-def predict(image: InputImage = File(...), model: RowingModel = Depends(get_model)):
+def predict(image: InputImage = File(...), model: RowingModel = Depends(get_model), 
+            api_key: APIKey = Depends(check_api_key)):
     """
     Predict the type of rowing boat in an image:
 
