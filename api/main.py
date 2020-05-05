@@ -5,7 +5,7 @@ from starlette.middleware.cors import CORSMiddleware
 
 from api.ml.rowing_model import get_model, RowingModel
 from api.datastructures import InputImage, PredictionResponse, BaseResponse
-from api.security import set_settings, check_api_key
+from api.security import check_api_key
 
 
 
@@ -31,7 +31,6 @@ def startup_event():
     # run the get model function on startup 
     # to cache the result, only loaded from disk once
     get_model()
-    set_settings()
 
 @app.get("/api/v1", response_model=BaseResponse)
 def return_usage(api_key: APIKey = Depends(check_api_key)):
