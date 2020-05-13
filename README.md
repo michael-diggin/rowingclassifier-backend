@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/michael-diggin/rowing_api.svg?branch=master)](https://travis-ci.org/michael-diggin/rowingclassifier-backend)
+[![Build Status](https://travis-ci.org/michael-diggin/rowingclassifier-backend.svg?branch=master)](https://travis-ci.org/michael-diggin/rowingclassifier-backend)
 
 # Rowing Classifier
 Rowing Classifier is a web page that classifies the type of rowing boat in a user uploaded image. 
