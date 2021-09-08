@@ -1,7 +1,7 @@
 tensorflow
 numpy==1.16.4
 h5py
-Pillow==7.0.0
+Pillow==8.3.2
 fastapi==0.54.1
 uvicorn==0.11.7
 python-multipart==0.0.5
