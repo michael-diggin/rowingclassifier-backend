@@ -1,5 +1,5 @@
 tensorflow
-numpy==1.16.4
+numpy==1.22.0
 h5py
 Pillow==9.0.0
 fastapi==0.54.1
